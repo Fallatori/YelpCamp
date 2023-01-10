@@ -23,7 +23,7 @@ const validateCampground = (req, res, next) => {
 router.route('/')
     .get(catchAsync(campgrounds.index))
     .post(isLoggedIn, upload.array('image'), validateCampground, catchAsync(campgrounds.createCampground))
-    // .post(upload.single('image'), (req,res) => {
+    // .post(upload.array('image'), (req,res) => {
     //     console.log(req.body, req.file)
     //     res.send('it worked!')
     // })
@@ -32,7 +32,7 @@ router.get('/new', isLoggedIn, campgrounds.renderNewForm)
 
 router.route('/:id')
     .get(catchAsync(campgrounds.showCampground))
-    .put(isLoggedIn, validateCampground, catchAsync(campgrounds.updateCampground))
+    .put(isLoggedIn, upload.array('image'), validateCampground, catchAsync(campgrounds.updateCampground))
     .delete(isLoggedIn, catchAsync(campgrounds.deleteCampground))
 
 router.get('/:id/edit', isLoggedIn, catchAsync(campgrounds.renderEditForm))
